@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+venv/
+
+# Build outputs
+dist/
+build/
+out/
+release/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Env / secrets
+.env
+*.pfx
+*.key
+*.json
