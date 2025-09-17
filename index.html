@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/icons/icon-192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CA Prep Tracker v1.0</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root, .theme-intermediate.dark {
+        --font-sans: 'Inter', sans-serif;
+        --color-brand-primary: #3b82f6; --color-brand-secondary: #2563eb;
+        --color-accent-success: #4ade80; --color-accent-warning: #f97316; --color-accent: #fbbf24;
+        --color-background: #121212; --color-surface: #1e1e1e;
+        --color-text-primary: #f8fafc; --color-text-secondary: #a0a0a0;
+        --color-border-color: #333333;
+      }
+      .theme-intermediate.light {
+        --color-brand-primary: #3b82f6; --color-brand-secondary: #60a5fa;
+        --color-accent-success: #4ade80; --color-accent-warning: #f97316; --color-accent: #f59e0b;
+        --color-background: #f1f5f9; --color-surface: #ffffff;
+        --color-text-primary: #1e293b; --color-text-secondary: #64748b;
+        --color-border-color: #e2e8f0;
+      }
+      .theme-foundation.dark {
+        --font-sans: 'Nunito', sans-serif;
+        --color-brand-primary: #60a5fa; --color-brand-secondary: #3b82f6;
+        --color-accent-success: #a3e635; --color-accent-warning: #fb923c; --color-accent: #fde047;
+        --color-background: #18181b; --color-surface: #27272a;
+        --color-text-primary: #f4f4f5; --color-text-secondary: #a1a1aa;
+        --color-border-color: #3f3f46;
+      }
+      .theme-foundation.light {
+        --font-sans: 'Nunito', sans-serif;
+        --color-brand-primary: #60a5fa; --color-brand-secondary: #93c5fd;
+        --color-accent-success: #a3e635; --color-accent-warning: #fb923c; --color-accent: #facc15;
+        --color-background: #f0f9ff; --color-surface: #ffffff;
+        --color-text-primary: #1e293b; --color-text-secondary: #64748b;
+        --color-border-color: #e0f2fe;
+      }
+      .theme-final.dark {
+        --font-sans: 'IBM Plex Sans', sans-serif;
+        --color-brand-primary: #2dd4bf; --color-brand-secondary: #14b8a6;
+        --color-accent-success: #4ade80; --color-accent-warning: #f59e0b; --color-accent: #d4af37; /* Gold-like */
+        --color-background: #0f172a; --color-surface: #1e293b;
+        --color-text-primary: #e2e8f0; --color-text-secondary: #94a3b8;
+        --color-border-color: #334155;
+      }
+      .theme-final.light {
+        --font-sans: 'IBM Plex Sans', sans-serif;
+        --color-brand-primary: #14b8a6; --color-brand-secondary: #2dd4bf;
+        --color-accent-success: #22c55e; --color-accent-warning: #f59e0b; --color-accent: #ca8a04;
+        --color-background: #f8fafc; --color-surface: #ffffff;
+        --color-text-primary: #0f172a; --color-text-secondary: #475569;
+        --color-border-color: #e2e8f0;
+      }
+
+      /* shimmer utility */
+      .shimmer {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.08) 50%, transparent 75%);
+        background-size: 200% 100%;
+        animation: shimmer 2.5s linear infinite;
+      }
+      @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+
+      @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 0 15px -3px var(--color-brand-primary); }
+        50% { box-shadow: 0 0 25px 0px var(--color-brand-primary); }
+      }
+      .pulse-glow {
+        animation: pulse-glow 2s infinite ease-in-out;
+      }
+
+      @keyframes sparkle-animation {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.1); }
+        50% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.1); }
+      }
+      .sparkle-animation::after {
+        content: '✨';
+        position: absolute;
+        top: -10px; right: -10px;
+        font-size: 1.2rem;
+        animation: sparkle-pop 1.5s ease-out infinite;
+      }
+      @keyframes sparkle-pop {
+        0%, 100% { transform: scale(0); opacity: 0; }
+        50% { transform: scale(1.2); opacity: 1; }
+      }
+
+      @keyframes fire-ring-spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .fire-ring::before {
+        content: '';
+        position: absolute;
+        top: -4px; left: -4px; right: -4px; bottom: -4px;
+        border-radius: 50%;
+        padding: 4px;
+        background: conic-gradient(from 0deg, var(--color-accent-warning), var(--color-accent), var(--color-accent-warning), transparent, var(--color-accent-warning));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        animation: fire-ring-spin 3s linear infinite;
+        z-index: -1;
+      }
+
+      .badge-base {
+        background-color: #374151; /* gray-700 */
+        border-color: #4b5563; /* gray-600 */
+        box-shadow: inset 0 1px 2px rgba(255,255,255,0.1), 0 2px 4px rgba(0,0,0,0.3);
+      }
+      .badge-bronze {
+        background-image: linear-gradient(145deg, #a97142, #7c4b28);
+        border-color: #c0844e; /* amber-600 */
+        color: #fff;
+      }
+      .badge-silver {
+        background-image: linear-gradient(145deg, #c0c0c0, #a0a0a0);
+        border-color: #d1d5db; /* gray-300 */
+        color: #1f2937; /* gray-800 */
+      }
+      .badge-gold {
+        background-image: linear-gradient(145deg, #fde047, #f59e0b);
+        border-color: #facc15; /* yellow-400 */
+        color: #422006; /* amber-900 */
+      }
+
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['var(--font-sans)', 'sans-serif'],
+            },
+            colors: {
+              'brand-primary': 'var(--color-brand-primary)',
+              'brand-secondary': 'var(--color-brand-secondary)',
+              'accent-success': 'var(--color-accent-success)',
+              'accent-warning': 'var(--color-accent-warning)',
+              'accent': 'var(--color-accent)',
+              'background': 'var(--color-background)',
+              'surface': 'var(--color-surface)',
+              'text-primary': 'var(--color-text-primary)',
+              'text-secondary': 'var(--color-text-secondary)',
+              'border-color': 'var(--color-border-color)',
+            },
+            keyframes: {
+              fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+              fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+              celebrate: { '0%': { transform: 'scale(0.5)', opacity: '0' }, '50%': { transform: 'scale(1.1)', opacity: '1' }, '100%': { transform: 'scale(1)', opacity: '1' } }
+            },
+            animation: {
+              fadeIn: 'fadeIn 0.5s ease-out forwards',
+              fadeInUp: 'fadeInUp 0.5s ease-out forwards',
+              celebrate: 'celebrate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards'
+            },
+          },
+        },
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-background text-text-primary transition-colors duration-300 font-sans">
+    <div id="root"></div>
+    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-brand-primary/10 via-transparent to-accent-warning/5 -z-10"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      // Disable SW in Vite dev (port 5173) to avoid cached assets blocking refresh
+      if ('serviceWorker' in navigator) {
+        const isViteDev = location.port === '5173';
+        if (isViteDev) {
+          navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+        } else {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then(registration => {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, err => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
